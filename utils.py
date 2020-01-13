@@ -66,14 +66,17 @@ def match_descriptors(descriptors_one, descriptors_two):
     return matches
 
 def draw_matches(matches, img1_pth, img2_pth):
-    if not isdir(join('outputs', 'matches')):
-        makedirs(join('outputs', 'matches'))
     img1 = cv2.imread(join('images', img1_pth))
     img2 = cv2.imread(join('images', img2_pth))
+
+    imgNames = img1_pth.replace('_resized', '').split('.')[0] + '_' + img2_pth.replace('_resized', '').split('.')[0]
+    if not isdir(join('outputs', 'matches', imgNames)):
+        makedirs(join('outputs', 'matches', imgNames))
     
     img = np.zeros(shape=(img1.shape[0]+img2.shape[0], img1.shape[1]+img2.shape[1], 3))
     img[:img1.shape[0], :img1.shape[1]] = img1 
-    img[img1.shape[0]:, img1.shape[1]:] = img2 
+    img[img1.shape[0]:, img1.shape[1]:] = img2
+    all_matches = img.copy() 
 
     for i, kp1 in enumerate(matches):
         kp2 = matches[kp1]
@@ -81,7 +84,9 @@ def draw_matches(matches, img1_pth, img2_pth):
         _, row1, col1, _ = kp1
         _, row2, col2, _ = kp2
         cv2.line(imgLine, (int(col1), int(row1)), (int(col2) + img1.shape[1], int(row2) + img1.shape[0]), (0, 255, 0), 1)
-        cv2.imwrite(join('outputs', 'matches', 'match_{:04d}.jpg'.format(i+1)), imgLine)
+        cv2.line(all_matches, (int(col1), int(row1)), (int(col2) + img1.shape[1], int(row2) + img1.shape[0]), (0, 255, 0), 1)
+        cv2.imwrite(join('outputs', 'matches', imgNames, 'match_{:04d}.jpg'.format(i+1)), imgLine)
+    cv2.imwrite(join('outputs', 'matches', imgNames, 'all_matches.jpg'), all_matches)
 
 def resize(img1_pth, img2_pth):
     img1 = cv2.imread(join('images', img1_pth))
