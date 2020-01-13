@@ -85,3 +85,4 @@ Total execution time: 94.35
 Sample output of the program:
 
 ![](example.jpg)
+![](sample_output.gif)
