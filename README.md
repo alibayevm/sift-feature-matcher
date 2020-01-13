@@ -84,4 +84,4 @@ Total execution time: 94.35
 
 Sample output of the program:
 
-![](exapmle.jpg)
+![](example.jpg)
