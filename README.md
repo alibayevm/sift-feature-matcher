@@ -81,3 +81,7 @@ Time to draw all matches: 1.88
 --------------------------------------------------
 Total execution time: 94.35
 ```
+
+Sample output of the program:
+
+![](exapmle.jpg)
